@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f4efe7" />
+    <title>마음의 여백 | AI 상담</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Gowun+Batang:wght@400;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="마음의 여백 홈">
+          <span class="brand-mark">◒</span>
+          <span>마음의 여백</span>
+        </a>
+        <div class="account-area" id="accountArea"><button class="account-button" id="openAuthButton" type="button">로그인 / 가입</button></div>
+      </header>
+
+      <main class="workspace">
+        <aside class="intro-panel">
+          <p class="eyebrow">YOUR QUIET SPACE <span>01</span></p>
+          <h1>잠시 멈춰,<br /><em>마음을 들여다보세요.</em></h1>
+          <p class="intro-copy">괜찮은 척하지 않아도 되는 곳.<br />지금 느끼는 마음 그대로, 천천히 나눠주세요.</p>
+          <div class="breathing-card">
+            <div class="breathing-orbit"><span></span></div>
+            <div><strong>호흡을 한 번 고르고</strong><small>답을 서두르지 않아도 괜찮아요</small></div>
+          </div>
+          <div class="quiet-note"><span>✳</span> 이 대화는 저장되지 않아요</div>
+        </aside>
+
+        <section class="chat-panel" aria-label="AI 상담 대화">
+          <nav class="mode-tabs" aria-label="서비스 선택"><button class="mode-tab active" data-mode="ai" type="button">AI 상담</button><button class="mode-tab" data-mode="community" type="button">마음 친구 <span class="online-count" id="onlineCount">0</span></button></nav>
+          <div class="chat-heading">
+            <div id="aiHeading">
+              <p class="eyebrow">TODAY · <span id="dateLabel"></span></p>
+              <h2>무슨 일이 있었나요?</h2>
+            </div>
+            <button class="icon-button" id="clearButton" type="button" aria-label="대화 초기화" title="대화 초기화">↻</button>
+          </div>
+
+          <div class="messages" id="messages" aria-live="polite">
+            <article class="message assistant-message">
+              <div class="avatar">◒</div>
+              <div class="bubble"><p>안녕하세요. 오늘 이곳에 와주셔서 고마워요.</p><p>지금 마음에 가장 크게 자리 잡고 있는 이야기가 있다면, 서두르지 말고 들려주세요.</p><time>방금 전</time></div>
+            </article>
+            <div class="prompt-chips" id="promptChips">
+              <button type="button">요즘 자꾸 지쳐요</button>
+              <button type="button">마음이 복잡해요</button>
+              <button type="button">그냥 이야기를 하고 싶어요</button>
+            </div>
+          </div>
+
+          <form class="composer" id="chatForm">
+            <label class="sr-only" for="messageInput">상담 메시지</label>
+            <textarea id="messageInput" rows="1" placeholder="편하게 적어주세요..." maxlength="2000"></textarea>
+            <div class="composer-footer"><span><kbd>Enter</kbd> 전송 · <kbd>Shift + Enter</kbd> 줄바꿈</span><button class="send-button" type="submit" aria-label="메시지 보내기">↑</button></div>
+          </form>
+          <p class="disclaimer">AI 상담은 전문적인 의료·심리 치료를 대신하지 않습니다. 위급한 경우 112 또는 109에 연락하세요.</p>
+
+          <div class="community-view hidden" id="communityView">
+            <div class="community-intro"><div><p class="eyebrow">COMMUNITY CIRCLE</p><h2>마음 친구와<br /><em>천천히 연결돼요.</em></h2></div><span class="live-pill"><span class="status-dot"></span> LIVE</span></div>
+            <p class="community-copy">비슷한 마음을 가진 사람과 안전하게 이야기를 나눠보세요. 먼저 로그인하면 온라인 친구를 확인할 수 있어요.</p>
+            <div class="people-list" id="peopleList"></div>
+            <div class="direct-chat hidden" id="directChat"><div class="direct-chat-title"><button id="backToPeople" type="button">←</button><strong id="chatPartner"></strong><span id="partnerStatus"></span></div><div class="direct-messages" id="directMessages"></div><form class="composer" id="directForm"><label class="sr-only" for="directInput">친구에게 보낼 메시지</label><textarea id="directInput" rows="1" maxlength="1000" placeholder="따뜻한 말을 건네보세요..."></textarea><div class="composer-footer"><span>상대방에게 예의를 지켜주세요</span><button class="send-button" type="submit" aria-label="메시지 보내기">↑</button></div></form></div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <div class="modal-backdrop hidden" id="authModal"><section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle"><button class="modal-close" id="closeAuthButton" type="button" aria-label="닫기">×</button><p class="eyebrow">A LITTLE MORE SPACE</p><h2 id="authTitle">마음 친구가 되어주세요.</h2><p class="auth-copy">계정을 만들면 다른 사용자와 안전하게 대화할 수 있어요.</p><div class="auth-tabs"><button class="auth-tab active" data-auth-mode="login" type="button">로그인</button><button class="auth-tab" data-auth-mode="signup" type="button">회원가입</button></div><form id="authForm"><label for="authEmail">이메일</label><input id="authEmail" type="email" required autocomplete="email" placeholder="you@example.com" /><label class="signup-only hidden" for="authNickname">닉네임</label><input class="signup-only hidden" id="authNickname" type="text" maxlength="20" autocomplete="nickname" placeholder="불리고 싶은 이름" /><label for="authPassword">비밀번호</label><input id="authPassword" type="password" minlength="6" required autocomplete="current-password" placeholder="6자 이상" /><p class="form-error" id="authError"></p><button class="primary-button" type="submit" id="authSubmit">로그인하기</button></form></section></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
